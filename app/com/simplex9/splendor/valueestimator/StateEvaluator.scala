@@ -40,18 +40,16 @@ object StateEvaluator {
       }
     }
     var tooFewCardPenalty = 0
-   // if(playerCardsNum < Param.PREFERRED_FREE_CARD_NUM){
-      //tooFewCardPenalty = Param.TOO_FEW_CARD_PENALTY
-      if(player.coins.sum - playerCardsNum >= Param.MAX_ALLOW_COIN_NUM_MORE_THAN_CARD){
-        tooFewCardPenalty += (player.coins.sum - playerCardsNum - Param.MAX_ALLOW_COIN_NUM_MORE_THAN_CARD) * Param.COIN_NUM_MORE_THAN_CARD_PENALTY
-      }
-   // }
+    if(player.coins.sum - playerCardsNum >= Param.MAX_ALLOW_COIN_NUM_MORE_THAN_CARD){
+      tooFewCardPenalty += (player.coins.sum - playerCardsNum - Param.MAX_ALLOW_COIN_NUM_MORE_THAN_CARD) * Param.COIN_NUM_MORE_THAN_CARD_PENALTY
+    }
 
+    var goldVal =  player.golds * Param.GOLD_VALUE(gameStage)
+    if(player.reserve.length > 0) goldVal = goldVal * 2
     val score = player.points * Param.POINT_VALUE +
       player.coins.sum * Param.COIN_VALUE(gameStage) +
       player.cards.sum * Param.CARD_VALUE(gameStage) +
-      player.golds * Param.GOLD_VALUE(gameStage)  +
-      topCardsVal - Param.RESERVE_COST(player.reserve.length)  - tooFewCardPenalty
+      goldVal + topCardsVal - Param.RESERVE_COST(player.reserve.length)  - tooFewCardPenalty
     score
   }
 

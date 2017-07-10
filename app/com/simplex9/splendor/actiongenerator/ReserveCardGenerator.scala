@@ -14,7 +14,7 @@ class ReserveCardGenerator(state: State, playerIndex: Int, estimators: Array[Val
     if (player.reserve.length >= Param.MAX_RESERVE) return Nil
     var gameStage = 0
     for(i <- (0 to Param.GAME_STAGE_CARD_NUM.length-1).reverse){
-      if(Param.GAME_STAGE_CARD_NUM(i) <= player.cards.length){
+      if(Param.GAME_STAGE_CARD_NUM(i) <= player.cards.sum){
         gameStage = i
       }
     }

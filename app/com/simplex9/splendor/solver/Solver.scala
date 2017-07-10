@@ -77,6 +77,10 @@ class Solver(state: State, playerIndex: Int, startPlayer: Int) {
         if (!action.noble.isDefined && !action.coins.isDefined && !action.reserve) {
           score += Param.NON_OP_PUNISH_SCORE
         }
+        if(action.card.isDefined && !action.reserve && action.card.get.isReserved &&
+          (action.card.get.point >= 2 || state.players(currentPlayerIndex).reserve.length >= 2)){
+          score -= Param.BUY_RESERVED_CARD_BONUS
+        }
         if (score < minVal) {
           minVal = score
           bestAction = action :: nextActions
@@ -104,6 +108,10 @@ class Solver(state: State, playerIndex: Int, startPlayer: Int) {
         }
         if (!action.noble.isDefined && !action.coins.isDefined && !action.reserve) {
           score -= Param.NON_OP_PUNISH_SCORE
+        }
+        if(action.card.isDefined && !action.reserve && action.card.get.isReserved &&
+        (action.card.get.point >= 2 || state.players(currentPlayerIndex).reserve.length >= 2)){
+          score += Param.BUY_RESERVED_CARD_BONUS
         }
         if (score > maxVal) {
           maxVal = score
